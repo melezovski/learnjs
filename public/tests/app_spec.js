@@ -18,12 +18,19 @@ describe('techauditGuru', function() {
   describe('hotlist view', function() {
     it('has a title that includes the hotlist number', function() {
       var view = techauditguru.hotlistView('1');
-      expect(view.text()).toEqual('Hotlist #1 Coming soon!');
+      expect(view.find('.title').text()).toEqual('Hotlist #1');
     });
   
     it('invokes the router when loaded', function() {
       spyOn(techauditguru, 'showView');
       techauditguru.appOnReady();
+      expect(techauditguru.showView).toHaveBeenCalledWith(window.location.hash);
+    });
+
+    it('subscribes to the hash change event', function() {
+      techauditguru.appOnReady();
+      spyOn(techauditguru, 'showView');
+      $(window).trigger('hashchange');
       expect(techauditguru.showView).toHaveBeenCalledWith(window.location.hash);
     });
   });  

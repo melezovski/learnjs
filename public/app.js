@@ -17,10 +17,14 @@ techauditguru.showView = function(hash) {
 }
 
 techauditguru.hotlistView = function(hotlistNumber) {
-  var title = 'Hotlist #' + hotlistNumber + ' Coming soon!';
-  return $('<div class="hotlist-view">').text(title);
+  var view = $('.templates .hotlist-view').clone();
+  view.find('.title').text('Hotlist #' + hotlistNumber);
+  return view;
 }
 
 techauditguru.appOnReady = function() {
+  window.onhashchange = function() {
+    techauditguru.showView(window.location.hash);
+  };
   techauditguru.showView(window.location.hash);
 }
